@@ -1,0 +1,58 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        // Основной слой (QWERTY)
+        default_layer {
+            bindings = <
+                // ЛЕВАЯ половина (3x5 + 3)
+                &kp Q    &kp W    &kp E    &kp R    &kp T
+                &kp A    &kp S    &kp D    &kp F    &kp G
+                &kp Z    &kp X    &kp C    &kp V    &kp B
+                &kp LCTL &kp LALT &kp LGUI
+
+                // ПРАВАЯ половина (3x5 + 3)
+                &kp Y    &kp U    &kp I     &kp O     &kp P
+                &kp H    &kp J    &kp K     &kp L     &kp SEMI
+                &kp N    &kp M    &kp COMMA &kp DOT   &kp SLASH
+                &kp LEFT &kp DOWN &kp RIGHT
+            >;
+        };
+
+        // Слой навигации
+        nav_layer {
+            bindings = <
+                // Левая половина
+                &kp ESC  &kp HOME &kp UP   &kp END   &kp DEL
+                &kp TAB  &kp LEFT &kp DOWN &kp RIGHT &kp ENTER
+                &kp LSFT &kp C    &kp V    &kp PSCR  &kp INS
+                &trans   &trans   &trans
+
+                // Правая половина
+                &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
+                &kp PG_UP  &kp HOME    &kp UP       &kp END     &kp VOL_UP
+                &kp PG_DN  &kp LEFT    &kp DOWN     &kp RIGHT   &kp VOL_DN
+                &trans     &trans      &trans
+            >;
+        };
+
+        layers = <
+            default_layer
+            nav_layer
+        >;
+    };
+
+    // Поведение для переключения слоев
+    behaviors {
+        nav: nav_layer {
+            compatible = "zmk,behavior-layer-tap";
+            label = "NAV_LAYER";
+            #binding-cells = <0>;
+            bindings = <&mo 1>;
+            tapping-term-ms = <200>;
+        };
+    };
+};
