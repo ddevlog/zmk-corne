@@ -4,11 +4,54 @@
 / {
     keymap {
         compatible = "zmk,keymap";
+
+        // Основной слой (QWERTY)
         default_layer {
             bindings = <
-                &kp Q &kp W &kp E
-                &kp A &kp S &kp D
+                // ЛЕВАЯ половина (3x6)
+                &kp Q &kp W &kp E &kp R &kp T
+                &kp A &kp S &kp D &kp F &kp G
+                &kp Z &kp X &kp C &kp V &kp B
+                         &kp TAB  &kp ESC  &kp LSFT
+
+                // ПРАВАЯ половина (3x6)
+                &kp Y    &kp U &kp I &kp O    &kp P
+                &kp H    &kp J &kp K &kp L    &kp SEMI
+                &kp N    &kp M &kp COMMA &kp DOT &kp SLASH
+                &kp BSPC    &kp QUOT    &kp RSFT
             >;
+        };
+
+        // Слой с цифрами/символами (Layer 1)
+        num_layer {
+            bindings = <
+                // Левая половина
+                &trans  &kp N1 &kp N2 &kp N3 &kp N4 &kp N5
+                &kp CAPS &kp N6 &kp N7 &kp N8 &kp N9 &kp N0
+                &trans  &kp EXCL &kp AT &kp HASH &kp DLLR &kp PERCENT
+
+                // Правая половина
+                &kp CARET &kp AMPS &kp STAR  &kp LPAR &kp RPAR &kp DEL
+                &kp MINUS &kp PLUS &kp EQUAL &kp LBRC &kp RBRC &kp BSLH
+                &kp UNDER &kp GRAVE &kp TILDE &kp LCBR &kp RCBR &kp PIPE
+            >;
+        };
+
+        // Добавьте переключение слоев
+        layers = <
+            default_layer
+            num_layer
+        >;
+    };
+
+    // Поведение для переключения слоя
+    behaviors {
+        num: num_layer {
+            compatible = "zmk,behavior-layer-tap";
+            label = "NUM_LAYER";
+            #binding-cells = <0>;
+            bindings = <&mo 1>;
+            tapping-term-ms = <200>;
         };
     };
 };
